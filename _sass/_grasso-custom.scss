@@ -1,0 +1,101 @@
+/* =========================================================================
+   Matteo Grasso — custom skin
+   Self-hosted TeX Gyre Pagella + dark graphite/amber, forced across all
+   theme-toggle states (:root, data-theme=light, data-theme=dark).
+   Imported LAST in assets/css/main.scss so it wins.
+   ========================================================================= */
+
+@font-face {
+  font-family: 'TeX Gyre Pagella';
+  font-style: normal; font-weight: 400; font-display: swap;
+  src: url('../fonts/texgyrepagella-regular.woff2') format('woff2'),
+       url('../fonts/texgyrepagella-regular.woff')  format('woff');
+}
+@font-face {
+  font-family: 'TeX Gyre Pagella';
+  font-style: italic; font-weight: 400; font-display: swap;
+  src: url('../fonts/texgyrepagella-italic.woff2') format('woff2'),
+       url('../fonts/texgyrepagella-italic.woff')  format('woff');
+}
+
+/* ---- Palette: override every --global-* hook with graphite + amber.
+        Applied to all three states so the OS preference / toggle never
+        produces a light page. */
+@mixin grasso-palette {
+  --global-base-color                 : #e2a64d;  /* amber accent */
+  --global-bg-color                   : #2b2f36;  /* graphite */
+  --global-footer-bg-color            : #262a30;
+  --global-border-color               : #464b55;
+  --global-dark-border-color          : #5a606b;
+  --global-code-background-color      : #1f2329;
+  --global-code-text-color            : #d7dbe2;
+  --global-fig-caption-color          : #8a929e;
+  --global-link-color                 : #e2a64d;
+  --global-link-color-hover           : #efbf78;
+  --global-link-color-visited         : #cf9a4a;
+  --global-masthead-link-color        : #d7dbe2;
+  --global-masthead-link-color-hover  : #ffffff;
+  --global-text-color                 : #cfd4dc;
+  --global-text-color-light           : #8a929e;
+  --global-thead-color                : #33373f;
+}
+:root,
+html[data-theme="light"],
+html[data-theme="dark"] { @include grasso-palette; }
+
+/* ---- Hide the (now redundant) light/dark toggle; keep the element so the
+        theme JS that references it does not error. */
+#theme-toggle { display: none !important; }
+
+/* ---- Structural dark surfaces (belt-and-suspenders over stock rules) */
+html, body { background-color: var(--global-bg-color); color: var(--global-text-color); }
+.masthead { background-color: var(--global-bg-color); border-bottom: 1px solid var(--global-border-color); }
+.greedy-nav { background: var(--global-bg-color); }
+.greedy-nav a, .masthead__menu-item a { color: var(--global-masthead-link-color); }
+.greedy-nav a:hover { color: var(--global-masthead-link-color-hover); }
+.greedy-nav .visible-links a:before { background: var(--global-base-color); }
+.page__footer { background-color: var(--global-footer-bg-color); color: var(--global-text-color-light); }
+.page__footer a { color: var(--global-text-color-light) !important; }
+
+/* ---- Typography: regular-weight headings everywhere (never bold) */
+h1, h2, h3, h4, h5, h6,
+.page__title, .page__content h1, .page__content h2, .page__content h3,
+.archive__item-title, .author__name {
+  font-weight: 400;
+  color: #f2f5f8;
+}
+.page__content { color: var(--global-text-color); }
+
+/* ---- Avatar: round, amber ring */
+.author__avatar img {
+  border-radius: 50%;
+  border: 3px solid var(--global-base-color);
+  max-width: 140px;
+  height: auto;
+}
+.author__name { margin-top: .4em; }
+.author__urls.social-icons i,
+.author__urls.social-icons .svg-inline--fa { color: var(--global-base-color); }
+
+/* ---- Accents */
+hr { border-color: var(--global-border-color); }
+.pub-year { color: var(--global-base-color); margin: 1.2em 0 .25em; }
+.btn, .btn--primary { background-color: var(--global-base-color); color: #1f242b; border: 0; }
+.btn:hover, .btn--primary:hover { background-color: #efbf78; color: #1f242b; }
+
+/* ---- Google Scholar stat card (data from _data/scholar.yml) */
+.scholar-stats {
+  display: block;
+  margin: .7em 0 .2em;
+  padding: .6em .65em .5em;
+  border: 1px solid var(--global-border-color);
+  border-radius: 7px;
+  font-size: .8em;
+  line-height: 1.55;
+  text-align: center;
+  text-decoration: none !important;
+  color: var(--global-text-color);
+}
+.scholar-stats:hover { border-color: var(--global-base-color); }
+.scholar-stats strong { color: var(--global-base-color); font-size: 1.3em; font-weight: 400; }
+.scholar-stats small { color: var(--global-text-color-light); }

@@ -20,8 +20,17 @@
     {% if author.bio %}<p class="author__bio">{{ author.bio }}</p>{% endif %}
   </div>
 
+  {% if site.data.scholar %}
+    <a class="scholar-stats" href="{{ author.googlescholar }}">
+      Citations <strong>{{ site.data.scholar.citations }}</strong> ·
+      h-index <strong>{{ site.data.scholar.h_index }}</strong> ·
+      i10 <strong>{{ site.data.scholar.i10 }}</strong><br>
+      <small>↗ Google Scholar · updated {{ site.data.scholar.updated | date: "%b %-d, %Y" }}</small>
+    </a>
+  {% endif %}
+
   <div class="author__urls-wrapper">
-    <button class="btn btn--inverse">Follow</button>
+    {% comment %}Follow button removed{% endcomment %}
     <ul class="author__urls social-icons">
       <!-- Font Awesome icons / Biographic information  -->
       {% if author.location %}
